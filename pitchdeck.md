@@ -1,3 +1,17 @@
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/943ee27d-0291-4cef-a634-53e42d28e3d4" alt="landing" /><br>
+  <img src="https://github.com/user-attachments/assets/f6ba4983-19c8-4457-be41-94e2eda2ac3e" alt="about" /><br>
+  <img src="https://github.com/user-attachments/assets/7fd1c59e-09b1-4f3d-b047-8fe5233320cb" alt="problem" /><br>
+  <img src="https://github.com/user-attachments/assets/c4297d03-d1ec-403e-8bcb-3f97d229ae7a" alt="solution" /><br>
+  <img src="https://github.com/user-attachments/assets/4d9538a5-4478-42c2-a2b4-0d7ff56a6ca6" alt="market" /><br>
+  <img src="https://github.com/user-attachments/assets/3411b105-e547-46cb-803c-b850a1c5067f" alt="product" /><br>
+  <img src="https://github.com/user-attachments/assets/1ffe961f-ef5c-468b-94ff-0c2fe2d907fb" alt="timeline" /><br>
+  <img src="https://github.com/user-attachments/assets/35bcb5be-9824-4a83-acb8-2012345aae78" alt="updates" /><br>
+  <img src="https://github.com/user-attachments/assets/679422c4-59c9-488c-aec9-f71ad11f35f5" alt="outcomes" /><br>
+  <img src="https://github.com/user-attachments/assets/921a3252-b94e-4132-8ef4-31dace28171c" alt="thank you" />
+</p>
+
+
 ```markdown
 # encore
 

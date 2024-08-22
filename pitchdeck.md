@@ -13,60 +13,83 @@
 
 
 ```markdown
-# encore
+# Encore: Turning Sold-Out Concerts into Warner Music Group's Next Breakthrough Artist
 
-## about me:
-nadine: creative technologist and software engineer with a passion for shaping the future of music.
+## Introduction
+
+Encore is an innovative project aimed at revolutionizing the way Warner Music Group discovers
+andsigns new talent. This initiative, developed by Nadine, a software engineer and creative
+technologist passionate about shaping the future of music, focuses on leveraging the power of
+live music performances to identify promising artists with strong fan bases.
+
+## The Problem
+
+- Social media has saturated the process of music discovery
+- Major labels often scout for talent in the same digital spaces
+- Online virality doesn't always translate into sustainable sales or long-term success
+
+## The Solution
+
+- Shift focus towards live music performances
+- Concert attendance and ticket sales serve as strong indicators of an artist's potential
+- Analyze data from live music events to gain valuable insights into an artist's ability
+to draw and maintain an audience
+
+## Market Opportunity
+
+- Live music industry is experiencing significant growth
+- Global revenues projected to exceed $37 billion by 2025
+- Presents an opportunity to tap into a thriving market and discover artists proving their
+worth through successful live performances
+
+## The Product
+
+Encore: A curated weekly email service spotlighting unsigned musicians who are selling out
+concerts, providing valuable information to Warner Music Group's A&R team.
+
+## Implementation Timeline
+
+1. **Planning Phase**
+   - Finalize project scope
+   - Set up development environment
+   - Create prototype script
+
+2. **Development Phase**
+   - Build database
+   - Integrate necessary APIs
+   - Automate email generation process
+
+3. **Refinement Phase**
+   - Test functionality
+   - Gather stakeholder feedback
+   - Implement improvements
+
+4. **Rollout Phase**
+   - Begin with soft launch
+   - Gradually scale deployment
+   - Develop partnerships
+
+## Progress
+
+- Test email created to demonstrate concept
+- Project code available on GitHub:
+[https://github.com/naestech/encore](https://github.com/naestech/encore)
+
+## Expected Outcomes
+
+- Help Warner Music Group sign promising artists with strong fan bases
+- Maintain industry dominance
+- Identify talent with proven ability to engage and retain an audience
+- Potentially lead to more successful signings and long-term artist development
+
+## Conclusion
+
+Encore represents an innovative approach to talent discovery in the music industry.
+By leveraging the growing live music market and focusing on artists with demonstrated fan engagement,
+Warner Music Group can stay ahead of the competition and continue to shape the future of music.
 
 ---
 
-## problem:
-- music discovery is dominated by social media, especially short-form platforms like tiktok and instagram.
-- labels are competing in the same crowded space, leading to over-saturation.
-- virality on social media doesn’t always lead to ticket sales or long-term success.
-
----
-
-## solution:
-- focus on concerts: live music is a strong indicator of an artist’s real fan base and revenue potential.
-- encore identifies artists who are selling out shows and puts them on warner music group's radar.
-
----
-
-## product overview:
-- encore: your tool for discovering the next big artist. it spotlights musicians who are selling out concerts and delivers their profiles in a weekly curated email.
-- tech stack: python, livenation api, bandsintown api.
-
----
-
-## market opportunity:
-- growing importance of live music: post-pandemic, live music has seen a resurgence, with global revenues expected to reach $30 billion by 2025.
-- data-driven a&r: as the music industry becomes more competitive, having data-backed insights into artists who can fill venues offers a major advantage in talent acquisition.
-- strategic advantage: by focusing on artists who have proven their fan engagement through sold-out shows, warner can stay ahead of competitors who rely solely on social media trends.
-
----
-
-## go-to-market strategy:
-- phase 1 - internal deployment: roll out encore within warner music group’s a&r teams to refine the tool based on feedback and real-world use.
-- phase 2 - integration with existing tools: integrate encore with warner’s current a&r workflows and databases for seamless operation.
-- phase 3 - external partnerships: explore partnerships with ticket platforms like ticketmaster or axs to enhance data access and provide exclusive insights.
-
----
-
-## progress:
-- early progress: automated email functionality and data pulling from livenation api are already operational.
-- upcoming milestones: secure access to bandsintown api and develop or integrate a real-time ticket sales api.
-- early wins: highlight any instances where encore has already identified promising talent or streamlined the discovery process.
-
----
-
-## vision:
-- long-term goal: to revolutionize artist discovery by shifting the focus from fleeting social media trends to the tangible success of live performances.
-- impact: enhance warner’s ability to sign artists with proven fan engagement and long-term potential, ensuring they stay at the forefront of the music industry.
-
----
-
-## ask:
-- resources needed: support in securing additional api access, particularly for real-time ticket sales data, and resources for further development and refinement of the tool.
-- next steps: schedule a demo session with the a&r team to showcase encore’s current capabilities and gather feedback for the next iteration.
-```
+© Warner Music Group. All rights reserved.  
+Presentation & code by technaelogy  
+Images courtesy of Unsplash

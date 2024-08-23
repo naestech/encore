@@ -23,7 +23,7 @@ def create_email(subject, body):
     message["Subject"] = subject
 
     # Attach the body with the message instance
-    message.attach(MIMEText(body, "plain"))
+    message.attach(MIMEText(body, "html"))  # Changed to HTML for better formatting
 
     return message
 
@@ -42,17 +42,63 @@ def send_email(message):
         print(f"Error: {e}")
 
 def compile_and_send_email():
-    # Test data to simulate the artist data
+    # Email subject
     subject = "Test: Weekly Unsigned Artists Update"
-    body = "This is a test email to verify the script works.\n\n"
 
-    # Simulated artist data for testing purposes
-    artist_data = (
-        "1. Test Artist A - Test Venue X\n"
-        "2. Test Artist B - Test Venue Y\n"
-        "3. Test Artist C - Test Venue Z\n"
-    )
-    body += artist_data
+    # Introduction paragraph
+    body = """
+    <h2>Here's your recap of artists who have sold out or are close to selling out their shows:</h2>
+    """
+
+    # Simulated artist and venue data for testing purposes
+    artists = [
+        {
+            "name": "Test Artist A",
+            "streaming_links": "<a href='#'>Spotify</a> | <a href='#'>Apple Music</a>",
+            "social_links": "<a href='#'>Instagram</a> | <a href='#'>Tiktok</a>",
+            "venue_name": "Test Venue X",
+            "venue_location": "New York, NY",
+            "capacity_percent": "95%"
+        },
+        {
+            "name": "Test Artist B",
+            "streaming_links": "<a href='#'>Spotify</a> | <a href='#'>Apple Music</a>",
+            "social_links": "<a href='#'>Instagram</a> | <a href='#'>Tiktok</a>",
+            "venue_name": "Test Venue Y",
+            "venue_location": "Los Angeles, CA",
+            "capacity_percent": "98%"
+        },
+        {
+            "name": "Test Artist C",
+            "streaming_links": "<a href='#'>Spotify</a> | <a href='#'>Apple Music</a>",
+            "social_links": "<a href='#'>Instagram</a> | <a href='#'>Tiktok</a>",
+            "venue_name": "Test Venue Z",
+            "venue_location": "Chicago, IL",
+            "capacity_percent": "100%"
+        }
+    ]
+
+    # Building the artist section
+    for artist in artists:
+        body += f"""
+        <h3>{artist['name']}</h3>
+        <p>
+            <strong>Streaming Links:</strong> {artist['streaming_links']}<br>
+            <strong>Social Media:</strong> {artist['social_links']}<br>
+            <strong>Venue:</strong> {artist['venue_name']} - {artist['venue_location']}<br>
+            <strong>Capacity:</strong> {artist['capacity_percent']}
+        </p>
+        <hr>
+        """
+
+    # Footer
+    body += """
+    <footer>
+        <p>Powered by Encore | <a href="https://github.com/your-github-repo">GitHub</a></p>
+        <p>Made with ♥ by Technaelogy</p>
+        <p><a href="https://instagram.com/your_instagram">Instagram</a> | <a href="https://substack.com/your_substack">Substack</a></p>
+    </footer>
+    """
 
     # Create and send the email
     email_message = create_email(subject, body)
@@ -60,3 +106,4 @@ def compile_and_send_email():
 
 # Directly call the function to test sending the email
 compile_and_send_email()
+

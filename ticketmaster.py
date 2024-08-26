@@ -1,3 +1,5 @@
+#uses ticketmaster's api to output sold out concerts
+
 import requests
 
 # set up your api key and base url
@@ -78,4 +80,3 @@ if sold_out_events:
         print(f"{sold_out_event['name']} on {sold_out_event['date']} at {sold_out_event['venue']} in {sold_out_event['location']} is sold out.")
 else:
     print("no sold-out music events found.")
-

@@ -13,12 +13,15 @@ driver = webdriver.Chrome(service=service)
 # Navigate to the Troubadour website
 driver.get("https://troubadour.com/")
 
+# Wait until the page is fully loaded
+wait = WebDriverWait(driver, 20)  # Increased wait time
+wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))  # Wait for the body tag to ensure the page is loaded
+
 # Wait until the featured events are loaded
-wait = WebDriverWait(driver, 10)
-wait.until(EC.presence_of_element_located((By.CLASS_NAME, "list-view-item")))
+wait.until(EC.presence_of_element_located((By.CLASS_NAME, "seetickets-list-event-container")))
 
 # Find all the featured events
-events = driver.find_elements(By.CLASS_NAME, "list-view-item")
+events = driver.find_elements(By.CLASS_NAME, "seetickets-list-event-container")
 
 sold_out_events = []
 
@@ -30,20 +33,22 @@ for event in events:
 
         if "sold out" in ticket_status.lower():
             # Extracting event details
-            title = event.find_element(By.CLASS_NAME, "list-view-item-heading").text.strip()
-            date = event.find_element(By.CLASS_NAME, "list-view-item-date").text.strip()
-            artists = event.find_element(By.CLASS_NAME, "list-view-item-artists").text.strip()
-            location = event.find_element(By.CLASS_NAME, "list-view-item-location").text.strip()
-            price = event.find_element(By.CLASS_NAME, "list-view-item-price").text.strip()
-            genre = event.find_element(By.CLASS_NAME, "list-view-item-genre").text.strip()
+            title = event.find_element(By.CLASS_NAME, "title").text.strip()
+            date = event.find_element(By.CLASS_NAME, "date").text.strip()
+            headliners = event.find_element(By.CLASS_NAME, "headliners").text.strip()
+            supporting_talent = event.find_element(By.CLASS_NAME, "supporting-talent").text.strip()
+            venue = event.find_element(By.CLASS_NAME, "venue").text.strip()
+            ages_price = event.find_element(By.CLASS_NAME, "ages-price").text.strip()
+            genre = event.find_element(By.CLASS_NAME, "genre").text.strip()
 
             # Store the event details in the sold_out_events list
             sold_out_events.append({
                 "title": title,
                 "date": date,
-                "artists": artists,
-                "location": location,
-                "price": price,
+                "headliners": headliners,
+                "supporting_talent": supporting_talent,
+                "venue": venue,
+                "ages_price": ages_price,
                 "genre": genre,
                 "status": "Sold Out"
             })
@@ -61,3 +66,4 @@ if sold_out_events:
         print(event)
 else:
     print("No sold-out events found.")
+

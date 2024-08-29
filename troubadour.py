@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 
 # Load the HTML file
-with open('troubadour.html', 'r', encoding='utf-8') as file:
+with open('troubadour.com.html', 'r', encoding='utf-8') as file:
     soup = BeautifulSoup(file, 'html.parser')
 
 # Find all elements with the "Sold Out" status
-sold_out_items = soup.find_all('a', class_='seetickets-buy-btn', string='Sold Out')
+sold_out_items = soup.find_all('a', class_='seetickets-buy-btn', string=lambda text: text and 'sold out' in text.lower())
 
 # Debug: Print number of sold-out items found
 print(f"Found {len(sold_out_items)} sold out items")

@@ -1,16 +1,22 @@
 #uses ticketmaster's api to output sold out concerts
 
 import requests
+from requests.auth import HTTPBasicAuth
+from dotenv import load_dotenv
+import os
 
-# set up your api key and base url
-api_key = ''
+# Load environment variables from .env file
+load_dotenv()
+
+# set up your api credentials and base url
+consumer_key = os.getenv('TICKETMASTER_CONSUMER_KEY')
+consumer_secret = os.getenv('TICKETMASTER_CONSUMER_SECRET')
 base_url = 'https://app.ticketmaster.com/discovery/v2/'
 
 print("starting script...")
 
 # step 1: get all music events (concerts) in the us
 query_params = {
-    'apikey': api_key,
     'countryCode': 'US',
     'classificationName': 'music',  # filter for music events
     'size': 5,  # limit to 5 events per page for testing purposes
@@ -23,7 +29,7 @@ page = 0
 
 while True:
     query_params['page'] = page
-    response = requests.get(f'{base_url}events', params=query_params)
+    response = requests.get(f'{base_url}events', params=query_params, auth=HTTPBasicAuth(consumer_key, consumer_secret))
     print("response status code:", response.status_code)
     data = response.json()
 
@@ -51,7 +57,7 @@ for event in events:
     event_id = event['id']
     print(f"checking event: {event['name']} (id: {event_id})")
 
-    event_response = requests.get(f'{base_url}events/{event_id}', params={'apikey': api_key})
+    event_response = requests.get(f'{base_url}events/{event_id}', auth=HTTPBasicAuth(consumer_key, consumer_secret))
     print("event response status:", event_response.status_code)
     event_data = event_response.json()
     

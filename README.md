@@ -1,4 +1,4 @@
-encore musicians who have or are close to selling out their shows in a curated email. made for warner music group.
+encore is an email script that spotlights musicians who have or are close to selling out their shows. made for warner music group.
 
 main.py: takes user input of a local venue's website, scrapes html, and sends automated email of sold out events
 <img width="869" alt="Screenshot 2024-08-31 at 10 01 12 PM" src="https://github.com/user-attachments/assets/70446f8f-5887-4dee-ac02-9a69c75e0a5c">

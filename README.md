@@ -10,6 +10,7 @@
       
 ### tiktok.py:
 - [x] scrape tiktok for posts mentioning sold-out shows.
+- [x] create database with posts.
 
 ### upcoming:
 - [ ] clean tiktok data

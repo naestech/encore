@@ -3,6 +3,7 @@ import re
 import requests
 import smtplib
 import ssl
+import sqlite3
 from bs4 import BeautifulSoup
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -17,6 +18,33 @@ port = int(os.getenv("SMTP_PORT", 587))  # Default to 587 if not set
 sender_email = os.getenv("SENDER_EMAIL")
 receiver_email = os.getenv("RECEIVER_EMAIL")
 password = os.getenv("EMAIL_PASSWORD")
+
+# Database setup
+def setup_database():
+    conn = sqlite3.connect('encore.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS sold_out_shows (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            product_name TEXT,
+            artist TEXT,
+            date TEXT,
+            location TEXT,
+            price TEXT,
+            genre TEXT,
+            tickets_link TEXT
+        )
+    ''')
+    conn.commit()
+    return conn
+
+def insert_sold_out_show(conn, show):
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO sold_out_shows (product_name, artist, date, location, price, genre, tickets_link)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (show['product_name'], show['artist'], show['date'], show['location'], show['price'], show['genre'], show['tickets_link']))
+    conn.commit()
 
 def sanitize_filename(url):
     # Remove the protocol (http:// or https://)
@@ -146,9 +174,9 @@ def compile_and_send_email(sold_out_shows):
     # Footer
     body += """
     <footer>
-        <p>Powered by Encore | <a href="https://github.com/your-github-repo">GitHub</a></p>
-        <p>Made with ♥ by Technaelogy</p>
-        <p><a href="https://instagram.com/your_instagram">Instagram</a> | <a href="https://substack.com/your_substack">Substack</a></p>
+        <p>Powered by Encore | <a href="https://github.com/naestech/encore/">GitHub</a></p>
+        <p>Made with ♥ by technaelogy</p>
+        <p><a href="https://instagram.com/technaelogy/">Instagram</a> | <a href="https://technaelogy.substack.com/">Substack</a></p>
     </footer>
     """
 
@@ -166,6 +194,9 @@ def extract_urls_from_markdown(file_path):
     return urls
 
 if __name__ == "__main__":
+    # Setup database
+    conn = setup_database()
+
     # Extract URLs from the venues.md file
     venue_urls = extract_urls_from_markdown('venues.md')
     
@@ -174,9 +205,14 @@ if __name__ == "__main__":
         html_file = save_website_html(url)
         if html_file:
             sold_out_shows = find_sold_out_shows(html_file)
+            for show in sold_out_shows:
+                insert_sold_out_show(conn, show)
             all_sold_out_shows.extend(sold_out_shows)
 
     if all_sold_out_shows:
         compile_and_send_email(all_sold_out_shows)
     else:
         print("No sold-out shows found.")
+
+    # Close the database connection
+    conn.close()

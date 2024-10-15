@@ -61,15 +61,26 @@ def find_sold_out_shows(html_file):
         show = item.find_parent('div', class_='mdc-card')  # Adjust this if needed based on actual structure
 
         if show:
-            # Extract show details
-            product_name = show.find('p', class_='fs-18 bold mb-12 title').get_text(strip=True)
+            # Extract show details with checks
+            product_name = show.find('p', class_='fs-18 bold mb-12 title')
+            product_name = product_name.get_text(strip=True) if product_name else 'N/A'
+
             artist_link = show.find('a', href=True)
             artist = artist_link.get_text(strip=True) if artist_link else 'N/A'
-            date = show.find('p', class_='fs-18 bold mt-1r date').get_text(strip=True)
-            location = show.find('p', class_='fs-12 venue').get_text(strip=True).replace('at ', '')
-            price = show.find('p', class_='fs-12 ages-price').get_text(strip=True) if show.find('p', class_='fs-12 ages-price') else 'N/A'
-            genre = show.find('p', class_='fs-12 genre').get_text(strip=True)
-            tickets_link = show.find('a', class_='seetickets-buy-btn')['href']
+
+            date = show.find('p', class_='fs-18 bold mt-1r date')
+            date = date.get_text(strip=True) if date else 'N/A'
+
+            location = show.find('p', class_='fs-12 venue')
+            location = location.get_text(strip=True).replace('at ', '') if location else 'N/A'
+
+            price = show.find('p', class_='fs-12 ages-price')
+            price = price.get_text(strip=True) if price else 'N/A'
+
+            genre = show.find('p', class_='fs-12 genre')
+            genre = genre.get_text(strip=True) if genre else 'N/A'
+
+            tickets_link = item['href'] if item else 'N/A'
 
             sold_out_shows.append({
                 "product_name": product_name,
@@ -145,12 +156,27 @@ def compile_and_send_email(sold_out_shows):
     email_message = create_email(subject, body)
     send_email(email_message)
 
+def extract_urls_from_markdown(file_path):
+    urls = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            match = re.search(r'\((http[s]?://[^\)]+)\)', line)
+            if match:
+                urls.append(match.group(1))
+    return urls
+
 if __name__ == "__main__":
-    url = input("Enter the website URL: ")
-    html_file = save_website_html(url)
-    if html_file:
-        sold_out_shows = find_sold_out_shows(html_file)
-        if sold_out_shows:
-            compile_and_send_email(sold_out_shows)
-        else:
-            print("No sold-out shows found.")
+    # Extract URLs from the venues.md file
+    venue_urls = extract_urls_from_markdown('venues.md')
+    
+    all_sold_out_shows = []
+    for url in venue_urls:
+        html_file = save_website_html(url)
+        if html_file:
+            sold_out_shows = find_sold_out_shows(html_file)
+            all_sold_out_shows.extend(sold_out_shows)
+
+    if all_sold_out_shows:
+        compile_and_send_email(all_sold_out_shows)
+    else:
+        print("No sold-out shows found.")

@@ -1,9 +1,10 @@
-## encore is an email script that spotlights musicians who have or are close to selling out their shows. made for warner music group.
+# encore
+
+## encore is an email script that spotlights musicians who have or are close to selling out their shows. made for warner music group
 
 main.py: takes user input of a local venue's website, scrapes html, and sends automated email of sold out events
 
 ![Screenshot 2024-08-31 at 10 01 12 PM](https://github.com/user-attachments/assets/70446f8f-5887-4dee-ac02-9a69c75e0a5c)
-
 *current output*
 
 ---
@@ -11,7 +12,6 @@ main.py: takes user input of a local venue's website, scrapes html, and sends au
 ticketmasterTest.py: outputs details of an event listed on ticketmaster
 
 ![Screenshot 2024-08-31 at 10 02 44 PM](https://github.com/user-attachments/assets/4f8b8788-6e30-4468-b6ce-a8eed13f01e7)
-
 *current output*
 
 ---
@@ -19,7 +19,6 @@ ticketmasterTest.py: outputs details of an event listed on ticketmaster
 tiktokTest.py: outputs into a .txt file details of videos with the following in the caption: "sold out shows", "sold out concerts".
 
 ![Screenshot 2024-09-17 at 9 19 08 PM](https://github.com/user-attachments/assets/71cf2049-030b-47be-b4bc-c76a08bfe0a9)
-
 *current output*
 
 ---
@@ -27,5 +26,4 @@ tiktokTest.py: outputs into a .txt file details of videos with the following in 
 txt2SQLite.py: turns tiktok_data.txt into tiktok_data.db
 
 ![Screenshot 2024-09-17 at 9 20 24 PM](https://github.com/user-attachments/assets/a69cc254-43fc-4fad-9767-e72519586b77)
-
 *current output*

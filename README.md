@@ -1,6 +1,6 @@
 # encore
 
-**encore** is an email automation script that spotlights musicians who are close to or have sold out their shows. built for warner music group.
+**encore** is an email automation script that spotlights musicians who are selling out their shows. built for warner music group.
 
 ## features
 ### main.py:

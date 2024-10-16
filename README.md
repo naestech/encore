@@ -25,8 +25,9 @@
   *sample output*
 
 - **`tiktok.py`**: scrapes tiktok for videos with captions like "sold out shows" or "sold out concerts" and saves details to `tiktok_data.db` 
-  ![output](https://github.com/user-attachments/assets/71cf2049-030b-47be-b4bc-c76a08bfe0a9)
+  ![output](https://github.com/user-attachments/assets/d5b62c68-9389-41ac-b32a-f623f02be17a)
   *sample output*
+
 
 ## setup
 1. clone the repository:

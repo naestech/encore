@@ -3,31 +3,31 @@
 **encore** is an email automation script that spotlights musicians who are selling out their shows. built for warner music group.
 
 ## features
-### main.py:
-- [x] scrape local venue websites for event details.
+### completed:
+- [x] scrape us venue websites for event details. 
 - [x] create database with sold-out event information.
 - [x] send an automated email of sold-out events.
-      
-### tiktok.py:
 - [x] scrape tiktok for posts mentioning sold-out shows.
 - [x] create database with posts.
+- [x] incorporate tiktok data to email.
+- [x] set up logging for data collection
 
 ### upcoming:
-- [ ] clean tiktok data
-- [ ] encorporate tiktok data to email
-- [ ] customize email.
-- [ ] automated scheduling
-
+- [ ] add gdpr compliance measures
+- [ ] clean tiktok and venue data
+- [ ] standardize venue data format
+- [ ] create backup system for data
+- [ ] add rate limiting for api calls
+- [ ] set up crons for daily data collection
+- [ ] automate scheduling with alerts
+- [ ] implement retry for failed tasks
+- [ ] build monitoring system for automations
+- [ ] customize email templates
 
 ## how it works
-- **`main.py`**: scrapes html of popular venues across the country for upcoming sold-out events, saves details to `encore.db`, and sends an automated email with details.
-  ![output](https://github.com/user-attachments/assets/70446f8f-5887-4dee-ac02-9a69c75e0a5c)
-  *sample output*
 
-- **`tiktok.py`**: scrapes tiktok for videos with captions like "sold out shows" or "sold out concerts" and saves details to `tiktok_data.db` 
-  ![output](https://github.com/user-attachments/assets/d5b62c68-9389-41ac-b32a-f623f02be17a)
+  ![output](https://github.com/user-attachments/assets/59d85dab-39dd-4590-8a98-879759aae30a)
   *sample output*
-
 
 ## setup
 1. clone the repository:
@@ -41,6 +41,6 @@
     ```
 3. run:
    ```bash
-   python3 main.py
+   python3 -m src.main
    ```
 

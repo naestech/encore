@@ -1,3 +1,10 @@
+"""
+Name: Nadine
+Email: naestech@proton.me
+Description: Script for scraping venue websites to collect information about sold-out shows. 
+Processes HTML data to extract relevant show details.
+"""
+
 import requests
 from bs4 import BeautifulSoup
 from src.utils.errorHandler import ErrorHandler
@@ -29,9 +36,11 @@ class VenueScraper:
             for item in soldOutItems:
                 show = item.find_parent('div', class_='mdc-card')
                 if show:
+                    title_element = show.find('p', class_='fs-18 bold mb-12 title')
+                    artist = title_element.find('a').get_text(strip=True) if title_element else 'Unknown Artist'
                     showData = {
-                        'product_name': show.find('p', class_='fs-18 bold mb-12 title').get_text(strip=True),
-                        'artist': show.find('a', href=True).get_text(strip=True),
+                        'product_name': title_element.get_text(strip=True) if title_element else 'Unknown Show',
+                        'artist': artist,
                         'date': show.find('p', class_='fs-18 bold mt-1r date').get_text(strip=True),
                         'location': show.find('p', class_='fs-12 venue').get_text(strip=True).replace('at ', ''),
                         'price': show.find('p', class_='fs-12 ages-price').get_text(strip=True),
@@ -45,11 +54,36 @@ class VenueScraper:
             self.errorHandler.handle_scraping_error(e, url)
             return []
 
-    def saveToDatabase(self, venueData):
-        try:
-            conn = sqlite3.connect(self.dbPath)
-            cursor = conn.cursor()
-            # Your database insertion logic here
-            conn.close()
-        except Exception as e:
-            self.errorHandler.handle_api_error(e, "Database Operation")
+    def save_to_database(self, venue_data):
+        conn = sqlite3.connect(self.dbPath)
+        cursor = conn.cursor()
+        
+        # Create table if it doesn't exist
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS shows (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                artist TEXT,
+                date TEXT,
+                location TEXT,
+                price TEXT,
+                genre TEXT,
+                tickets_link TEXT
+            )
+        ''')
+
+        # Insert data
+        for show in venue_data:
+            cursor.execute('''
+                INSERT INTO shows (artist, date, location, price, genre, tickets_link)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (
+                show['artist'],
+                show['date'],
+                show['location'],
+                show['price'],
+                show['genre'],
+                show['tickets_link']
+            ))
+
+        conn.commit()
+        conn.close()

@@ -1,3 +1,10 @@
+"""
+Name: Nadine
+Email: naestech@proton.me
+Description: Script for scraping TikTok data related to sold-out concerts and shows. 
+Uses the Apify API to extract relevant TikTok posts and saves them to a database.
+"""
+
 import os
 import time
 import sqlite3
@@ -5,6 +12,7 @@ from apify_client import ApifyClient
 from dotenv import load_dotenv
 from src.utils.errorHandler import ErrorHandler
 from src.utils.decorators import retry_on_failure
+from src.utils.logger import info_logger, error_logger, debug_logger
 
 class TikTokScraper:
     def __init__(self):
@@ -12,7 +20,7 @@ class TikTokScraper:
         self.apiToken = os.getenv('APIFY_API_TOKEN')
         self.client = ApifyClient(self.apiToken)
         self.errorHandler = ErrorHandler()
-        self.dbPath = 'data/tikTokData.db'
+        self.dbPath = 'data/tiktokData.db'
 
     @retry_on_failure(max_retries=3)
     def runTikTokExtractor(self, query):
@@ -20,7 +28,7 @@ class TikTokScraper:
             actorId = 'clockworks~free-tiktok-scraper'
             inputData = {
                 "excludePinnedPosts": False,
-                "resultsPerPage": 5,
+                "resultsPerPage": 1,
                 "searchQueries": [query],
                 "shouldDownloadCovers": False,
                 "shouldDownloadSlideshowImages": False,
@@ -68,7 +76,7 @@ class TikTokScraper:
                 'source': 'TikTok'
             }
             
-            print("Inserting data:", formattedData)  # Debugging
+            debug_logger.debug(f"Inserting data: {formattedData}")
             
             cursor.execute('''
                 INSERT OR IGNORE INTO videos (id, username, post_content, post_time, video_url, source)
@@ -87,19 +95,40 @@ class TikTokScraper:
         except Exception as e:
             self.errorHandler.handle_api_error(e, "Database Operation")
 
+    def clean_tiktok_data(self, tiktok_data):
+        cleaned_data = []
+        for post in tiktok_data:
+            if self._is_relevant(post['post_content']):
+                cleaned_post = {
+                    'username': post['username'],
+                    'post_content': self._sanitize_content(post['post_content']),
+                    'post_time': post['post_time'],
+                    'video_url': post['video_url']
+                }
+                cleaned_data.append(cleaned_post)
+        return cleaned_data
+
+    def _is_relevant(self, content):
+        keywords = ['sold out', 'concert', 'show', 'tour']
+        return any(keyword in content.lower() for keyword in keywords)
+
+    def _sanitize_content(self, content):
+        # Remove any potentially problematic characters or shorten if too long
+        return content[:200] if len(content) > 200 else content
+
 if __name__ == '__main__':
     scraper = TikTokScraper()
     queries = ["sold out concert", "sold out show"]
     
     for query in queries:
-        print(f'Fetching videos for query: "{query}"')
+        info_logger.info(f'Fetching videos for query: "{query}"')
         results = scraper.runTikTokExtractor(query)
         
         if results:
             for videoData in results:
-                print("Video Data:", videoData)  # Debugging
+                debug_logger.debug(f"Video Data: {videoData}")
                 scraper.saveToDatabase(videoData)
         else:
-            print("No results found or an error occurred.")
+            info_logger.info("No results found or an error occurred.")
 
-    print("Data extraction and insertion complete.")
+    info_logger.info("Data extraction and insertion complete.")

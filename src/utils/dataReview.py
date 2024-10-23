@@ -1,6 +1,14 @@
+"""
+Name: Nadine
+Email: naestech@proton.me
+Description: Utility script to review recent data collected from TikTok and venues. 
+Allows querying and displaying data from a specified number of days back.
+"""
+
 import sqlite3
 import pandas as pd
 from datetime import datetime, timedelta
+from src.utils.logger import info_logger, error_logger, debug_logger
 
 def review_recent_data(days_back=1):
     """Review data collected in the last N days"""
@@ -20,11 +28,11 @@ def review_recent_data(days_back=1):
         WHERE date > date('now', ?)
     """, venue_conn, params=[f'-{days_back} days'])
     
-    print("\nRecent TikTok Data:")
-    print(tiktok_df.to_string())
+    info_logger.info("\nRecent TikTok Data:")
+    info_logger.info(tiktok_df.to_string())
     
-    print("\nRecent Venue Data:")
-    print(venue_df.to_string())
+    info_logger.info("\nRecent Venue Data:")
+    info_logger.info(venue_df.to_string())
     
     # Close connections
     tiktok_conn.close()

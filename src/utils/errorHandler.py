@@ -1,37 +1,20 @@
 import logging
 from datetime import datetime
+from src.utils.logger import error_logger
 
 class DataCollectionError(Exception):
     """Custom exception for data collection errors"""
     pass
 
 class ErrorHandler:
-    def __init__(self, logFile: str = "errorLogs.txt"):
-        # Set up logging
-        logging.basicConfig(
-            filename=logFile,
-            level=logging.INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s'
-        )
-        self.logger = logging.getLogger(__name__)
+    @staticmethod
+    def handle_error(e, context):
+        error_logger.error(f"Error in {context}: {str(e)}", exc_info=True)
 
-    def handle_error(self, error: Exception, source: str) -> None:
-        """Handle general errors"""
-        error_msg = f"Error in {source}: {str(error)}"
-        self.logger.error(error_msg)
-        raise DataCollectionError(error_msg)
+    @staticmethod
+    def handle_api_error(e, api_name):
+        error_logger.error(f"API Error in {api_name}: {str(e)}", exc_info=True)
 
-    def handle_api_error(self, error: Exception, source: str, retry_count: int = None) -> None:
-        """Handle API-related errors"""
-        error_msg = f"API Error from {source}: {str(error)}"
-        if retry_count is not None:
-            error_msg += f" (Attempt {retry_count})"
-        
-        self.logger.error(error_msg)
-        raise DataCollectionError(error_msg)
-
-    def handle_scraping_error(self, error: Exception, url: str) -> None:
-        """Handle web scraping errors"""
-        error_msg = f"Scraping Error for {url}: {str(error)}"
-        self.logger.error(error_msg)
-        raise DataCollectionError(error_msg)
+    @staticmethod
+    def handle_scraping_error(e, url):
+        error_logger.error(f"Scraping Error for URL {url}: {str(e)}", exc_info=True)
